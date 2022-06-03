@@ -7,6 +7,32 @@ abstract class Character {
   walk(): string {
     return "I can walk";
   }
+  throwPower<TypePower extends Power>(power: TypePower) {
+    for (let _ of [1, 2, 3]) {
+      console.log(`(${this.alias}) ${power.message}`);
+    }
+  }
+}
+
+interface Power {
+  powerName: string;
+  damage: number;
+  message: () => string;
+}
+class SpiderWebBall implements Power {
+  public powerName = "Spider Web Ball";
+  public damage = 1800;
+  message(): string {
+    return `Throwing ${this.powerName}, I hit ${this.damage} per time`;
+  }
+}
+
+class Grenade implements Power {
+  public powerName = "Grenade";
+  public damage = 1500;
+  message(): string {
+    return `Throwing ${this.powerName}, I hit ${this.damage} per time`;
+  }
 }
 
 class Spiderman extends Character {
@@ -44,3 +70,6 @@ console.log(greenGlobin.fly());
 console.log();
 console.log(spiderman.walk());
 console.log(greenGlobin.walk());
+
+spiderman.throwPower<SpiderWebBall>(new SpiderWebBall());
+greenGlobin.throwPower<Grenade>(new Grenade());
